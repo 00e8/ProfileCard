@@ -19,7 +19,7 @@ const tracks = [
 ];
 
 // Discord User ID for Lanyard API
-const DISCORD_USER_ID = '1186605673644032081';
+const DISCORD_USER_ID = '1319086535831719959';
 
 const ProfileCard = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'projects' | 'contact'>('home');
