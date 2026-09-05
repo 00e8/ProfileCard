@@ -78,6 +78,56 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid hsl(var(--border-subtle));
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Cursor-reactive spotlight glow, following --spot-x/--spot-y set on mousemove */
+.glass-card-spotlight {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  position: relative;
+}
+
+.glass-card-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    380px circle at var(--spot-x) var(--spot-y),
+    hsl(0 0% 100% / 0.16),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-card-spotlight:hover::before {
+  opacity: 1;
+}
+
+.glass-card-spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    500px circle at var(--spot-x) var(--spot-y),
+    hsl(0 0% 100% / 0.05),
+    transparent 60%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-card-spotlight:hover::after {
+  opacity: 1;
 }
 
 /* Tab styles */
@@ -137,6 +187,39 @@
 
 .status-dnd {
   background: hsl(var(--status-dnd));
+}
+
+/* Soft pulsing ring behind the online status dot */
+.status-online {
+  position: relative;
+}
+
+.status-online::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: hsl(var(--status-online) / 0.55);
+  animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes status-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  75%,
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-online::after {
+    animation: none;
+    display: none;
+  }
 }
 
 /* Content section borders */
