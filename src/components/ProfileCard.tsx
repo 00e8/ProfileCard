@@ -13,7 +13,7 @@ const tracks = [
     title: 'On My Own',
     artist: 'Sami Yusuf', // TODO: replace with the real artist name
     albumArt: albumCover, // TODO: replace with real album art if you have one
-    duration: '3:00', // TODO: replace with the real track length (mm:ss)
+    duration: '2:52', // TODO: replace with the real track length (mm:ss)
     audioSrc: '/audio/On%20My%20Own.mp3',
   },
   {
@@ -83,10 +83,10 @@ const ProfileCard = () => {
                 {/* Header */}
                 <motion.div variants={homeItem} className="mb-4 sm:mb-5 md:mb-6">
                   <h1 className="text-xl sm:text-2xl md:text-3xl mb-0 font-medium leading-none tracking-tight font-retro">
-                    HYZEX
+                    й
                   </h1>
                   <p className="text-muted-foreground text-xs sm:text-sm leading-none mt-1 sm:mt-2">
-                    full stack developer specializing in modern web technologies
+                    Your life isn't yours if you always care what others think
                   </p>
                 </motion.div>
 
