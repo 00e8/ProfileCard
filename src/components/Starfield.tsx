@@ -8,6 +8,8 @@ interface Star {
   twinkleSpeed: number;
   twinkleOffset: number;
   depth: number; // 0 = far/small parallax, 1 = near/strong parallax
+  vx: number; // slow independent drift
+  vy: number;
 }
 
 interface ShootingStar {
@@ -46,18 +48,24 @@ const Starfield = () => {
     };
 
     const initStars = () => {
-      const starCount = Math.floor((canvas.width * canvas.height) / 7000);
+      // Denser field than before for a fuller night-sky look.
+      const starCount = Math.floor((canvas.width * canvas.height) / 2800);
       starsRef.current = [];
 
       for (let i = 0; i < starCount; i++) {
+        const driftAngle = Math.random() * Math.PI * 2;
+        const driftSpeed = prefersReducedMotion ? 0 : Math.random() * 0.035 + 0.008;
+
         starsRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 1.5 + 0.5,
-          opacity: Math.random() * 0.5 + 0.2,
+          size: Math.random() * 1.2 + 0.4,
+          opacity: Math.random() * 0.5 + 0.3,
           twinkleSpeed: Math.random() * 0.02 + 0.005,
           twinkleOffset: Math.random() * Math.PI * 2,
           depth: Math.random(),
+          vx: Math.cos(driftAngle) * driftSpeed,
+          vy: Math.sin(driftAngle) * driftSpeed,
         });
       }
     };
@@ -97,8 +105,16 @@ const Starfield = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       starsRef.current.forEach((star) => {
+        // slow independent drift, wrapping around the edges of the screen
+        star.x += star.vx;
+        star.y += star.vy;
+        if (star.x < -10) star.x = canvas.width + 10;
+        if (star.x > canvas.width + 10) star.x = -10;
+        if (star.y < -10) star.y = canvas.height + 10;
+        if (star.y > canvas.height + 10) star.y = -10;
+
         const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset);
-        const currentOpacity = star.opacity + twinkle * 0.3;
+        const currentOpacity = Math.max(0.05, Math.min(1, star.opacity + twinkle * 0.3));
 
         // stars further along "depth" shift more with the cursor -> parallax
         const parallaxStrength = star.depth * 14;
@@ -107,7 +123,7 @@ const Starfield = () => {
 
         ctx.beginPath();
         ctx.arc(px, py, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.05, Math.min(1, currentOpacity))})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
         ctx.fill();
       });
 
