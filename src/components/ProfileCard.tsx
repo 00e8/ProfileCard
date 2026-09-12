@@ -10,6 +10,13 @@ import albumCover from '@/assets/album-cover.jpg';
 
 const tracks = [
   {
+    title: 'On My Own',
+    artist: 'Sami Yusuf', // TODO: replace with the real artist name
+    albumArt: albumCover, // TODO: replace with real album art if you have one
+    duration: '3:00', // TODO: replace with the real track length (mm:ss)
+    audioSrc: '/audio/On%20My%20Own.mp3',
+  },
+  {
     title: 'Shake it to the max',
     artist: 'MOLIY',
     albumArt: albumCover,

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import ViewCounter from './ViewCounter';
 
 interface NavigationProps {
   activeTab: 'home' | 'projects' | 'contact';
@@ -29,14 +30,17 @@ const Navigation = ({ activeTab, onTabChange, onHelpClick }: NavigationProps) =>
           </button>
         ))}
       </div>
-      <motion.button
-        onClick={onHelpClick}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.92 }}
-        className="px-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
-      >
-        [?]
-      </motion.button>
+      <div className="flex items-center gap-3">
+        <ViewCounter />
+        <motion.button
+          onClick={onHelpClick}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.92 }}
+          className="px-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          [?]
+        </motion.button>
+      </div>
     </div>
   );
 };
