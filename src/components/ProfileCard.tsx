@@ -35,7 +35,7 @@ const tracks = [
 ];
 
 // Discord User ID for Lanyard API
-const DISCORD_USER_ID = '1319086535831719959';
+const DISCORD_USER_ID = '1426204326358945924';
 
 // Discord server invite code (from https://discord.gg/masr)
 const DISCORD_INVITE_CODE = 'masr';
